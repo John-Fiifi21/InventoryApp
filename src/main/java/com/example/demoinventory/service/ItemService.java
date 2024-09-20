@@ -16,8 +16,8 @@ public class ItemService {
 
 
     public ItemService() {
-        items.add(new Item(1, "BOOK", "Book for kid"));
-        items.add(new Item(2, "BOOK", "Book for student"));
+        //items.add(new Item(1, "BOOK", "Book for kid"));
+        //items.add(new Item(2, "BOOK", "Book for student"));
     }
 
     public List<Item> getItems() {

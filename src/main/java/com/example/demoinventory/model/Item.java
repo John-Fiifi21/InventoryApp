@@ -2,12 +2,13 @@ package com.example.demoinventory.model;
 
 public class Item {
     private int id;
-    private String title;
+    private String name;
     private String description;
+    private int quantity;
 
-    public Item(int id, String title, String description) {
+    public Item(int id, String name, String description) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
     }
 
@@ -20,20 +21,21 @@ public class Item {
     }
 
     public String getTitle() {
-        return title;
+        return name;
     }
 
     @Override
     public String toString() {
         return "Iterm{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", quantity=" + quantity +
                 '}';
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -44,4 +46,10 @@ public class Item {
         this.description = description;
     }
 
+   public int getQuantity() {
+        return quantity;
+   }
+  public void setQuantity(int quantity) {
+        this.quantity = quantity;
+  }
 }
