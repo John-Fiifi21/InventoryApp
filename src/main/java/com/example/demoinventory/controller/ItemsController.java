@@ -1,24 +1,53 @@
 package com.example.demoinventory.controller;
 
-import com.example.demoinventory.model.Iterm;
+import com.example.demoinventory.model.Item;
 import com.example.demoinventory.service.ItemService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 @RestController
-@RequestMapping
+@RequestMapping("/items")
 public class ItemsController {
-  private ItemService itemService;
-  public ItemsController(ItemService itemService) {
-      this.itemService = itemService;
-  }
+    @Autowired
+    private ItemService itemService;
 
-  @GetMapping
-    List<Iterm> getAllItems() {
-      return itemService.getItems();
-  }
+    @GetMapping
+    public List<Item> getItems() {
+        return itemService.getItems();
+    }
+
+    @GetMapping("/{id}")
+    public Item getItemById(@PathVariable int id) {
+        return  itemService.findItemById(id);
+    }
+
+    @PostMapping
+    public void addItem(@RequestBody Item item) {
+        itemService.addItem(item);
+    }
+
+    @PutMapping("/{id}")
+    public void editItem(@PathVariable int id, @RequestBody Item item) {
+        itemService.editItem(item);
+    }
+
+
+//    @GetMapping("/search")
+//    public List<Item> searchItems(@RequestParam String query) {
+//        return itemService.searchItems(query);
+//    }
+
+//    @GetMapping("/search")
+//        public List<Item> searchItem(@RequestParam(name = "search", required = false) String search) {
+//            if(search != null) {
+//                return  itemService.searchItem(search);
+//            }
+//        }
+//
+    @GetMapping("search")
+    public List<Item> searchItems(@RequestParam(name = "filter", required = false) String item) {
+        return itemService.searchItems(item);
+    }
 }
+
+
