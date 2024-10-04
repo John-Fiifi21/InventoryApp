@@ -48,6 +48,11 @@ public class ItemsController {
     public List<Item> searchItems(@RequestParam(name = "filter", required = false) String item) {
         return itemService.searchItems(item);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable int id) {
+        itemService.deleteItem(id);
+    }
 }
 
 

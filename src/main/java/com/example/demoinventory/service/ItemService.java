@@ -2,6 +2,7 @@ package com.example.demoinventory.service;
 
 import com.example.demoinventory.model.Item;
 import com.example.demoinventory.repository.ItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Service
 public class ItemService {
-
+    @Autowired
     private ItemRepository itemRepository;
 
     private List<Item>  items = new ArrayList<>();
@@ -21,28 +22,32 @@ public class ItemService {
     }
 
     public List<Item> getItems() {
-        return items;
+        return itemRepository.findAll();
     }
 
     public Item findItemById(int id) {
-        for (Item item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
+        return itemRepository.findById(id).orElse(null);
+//        for (Item item : items) {
+//            if (item.getId() == id) {
+//                return item;
+//            }
+//        }
+//        return null;
     }
     public void addItem(Item item) {
-        items.add(item);
+        itemRepository.save(item);
     }
     public void editItem(Item item) {
         // find book
         // edit
         //save
-        items.set(items.indexOf(item), item);
+//        items.set(items.indexOf(item), item);
+        itemRepository.save(item);
+
     }
 
     public void deleteItem(int id) {
+        itemRepository.deleteById(id);
         // loop through the list and delete
     }
 
@@ -52,15 +57,17 @@ public class ItemService {
 
     public List<Item> searchItems(String query) {
         List<Item> results = new ArrayList<>();
-        if(query != null ) {
-            for (Item item : items) {
-                if (item.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                        item.getDescription().toLowerCase().contains(query.toLowerCase())) {
-                    results.add(item);
-                }
+        itemRepository.findAll().forEach(res -> {
+            String name = res.getName();
+            String description = res.getDescription();
+
+            if ((name != null && name.toLowerCase().contains(query.toLowerCase())) ||
+                    (description != null && description.toLowerCase().contains(query.toLowerCase()))) {
+                results.add(res);
             }
-        }
+        });
         return results;
     }
+
 
 }
